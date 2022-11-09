@@ -1,6 +1,6 @@
 Package: AvE
 Title: Compares actual and expected model predictions in a nifty RShiny interface
-Version: 0.1
+Version: 1.0
 Authors@R: 
     person("Jack", "Reardon", , role = c("aut", "cre"))
 Description: What the package does (one paragraph).
@@ -11,3 +11,7 @@ RoxygenNote: 7.2.1
 Depends: 
     R (>= 2.10)
 LazyData: true
+Imports: 
+    dplyr,
+    shiny,
+    shinydashboard

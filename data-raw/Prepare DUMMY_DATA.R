@@ -1,3 +1,5 @@
-PACKAGE_DATA <- sample(1000)
+DUMMY_DATA <- sample(1000)
 
-usethis::use_data(PACKAGE_DATA, overwrite = TRUE)
+usethis::use_data(DUMMY_DATA,
+                  internal = FALSE,
+                  overwrite = TRUE)
