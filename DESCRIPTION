@@ -1,0 +1,13 @@
+Package: AvE
+Title: Compares actual and expected model predictions in a nifty RShiny interface
+Version: 0.1
+Authors@R: 
+    person("Jack", "Reardon", , role = c("aut", "cre"))
+Description: What the package does (one paragraph).
+License: GNU v3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+Depends: 
+    R (>= 2.10)
+LazyData: true
