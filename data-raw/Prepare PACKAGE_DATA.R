@@ -31,10 +31,6 @@ N_PREDICTIONS_ALONG_X_AXIS <- 20
 prediction_percentiles_values <- c(0, 0.05, 0.25, 0.75, 0.95, 1)
 PREDICTION_PERCENTILES <- setNames(prediction_percentiles_values, nm = sprintf("%1.f%%", prediction_percentiles_values * 100))
 
-create_shiny_ID("INTEGER_VARIABLE_TYPE")
-create_shiny_ID("NUMERIC_VARIABLE_TYPE")
-create_shiny_ID("FACTOR_VARIABLE_TYPE")
-
 
 usethis::use_data(PACKAGE_NAME,
                   VERSION_NUMBER,
@@ -50,10 +46,6 @@ usethis::use_data(PACKAGE_NAME,
                   FACTOR_ELEMENTS_MAX_COUNT,
                   N_PREDICTIONS_ALONG_X_AXIS,
                   PREDICTION_PERCENTILES,
-                  
-                  INTEGER_VARIABLE_TYPE,
-                  NUMERIC_VARIABLE_TYPE,
-                  FACTOR_VARIABLE_TYPE,
                   
                   internal = TRUE,
                   overwrite = TRUE)

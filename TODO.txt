@@ -1,4 +1,6 @@
 Tooltip formatting
 Documentation
 Move this TODO to Github
-Format the UI
+Make data input dynamic (currently it defaults to DUMMY_DATA)
+Use ggplot2::diamonds data instead - more interesting
+Incorporate logging to all functions

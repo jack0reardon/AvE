@@ -1,28 +1,21 @@
 app_ui <- function() {
-  shiny::tagList(
-    shiny::div(
-      id = ENTIRE_PAGE_ID,
-      
-      shiny::h1("jack"),
-      
-      shiny::fluidRow(
-        shinydashboard::box(width = 3,
-                            solidHeader = FALSE,
-                            status = "primary",
-                            collapsible = FALSE,
-                            shiny::div(
-                              shiny::actionButton(APPLY_AB_ID, label = "Apply"),
-                              shiny::selectInput(X_AXIS_SI_ID, label = "X-Axis Variable", choices = c()),
-                              shiny::uiOutput(FIELD_FILTERS_UI_ID)
-                            )),
-        
-        
-        shinydashboard::box(width = 9,
-                            solidHeader = FALSE,
-                            status = "primary",
-                            collapsible = FALSE,
-                            highcharter::highchartOutput(MAIN_GRAPH_ID))
+  shiny::fluidPage(
+    shiny::titlePanel("AvE"),
+    shiny::helpText("Graph mean, median, and percentiles of prediced response variable alongside actual data"),
+    shiny::hr(),
+    shiny::sidebarPanel(
+      width = 3,
+      shiny::div(
+        shiny::actionButton(APPLY_AB_ID, label = "Apply"),
+        shiny::hr(),
+        shiny::selectInput(X_AXIS_SI_ID, label = "X-Axis Variable", choices = c()),
+        shiny::uiOutput(FIELD_FILTERS_UI_ID)
       )
+    ),
+    mainPanel(
+      width = 6,
+      shiny::h2("Graph of response variable by selected x-axis variable"),
+      highcharter::highchartOutput(MAIN_GRAPH_ID)
     )
   )
 }
