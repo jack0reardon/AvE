@@ -12,7 +12,7 @@ app_ui <- function() {
         shiny::uiOutput(FIELD_FILTERS_UI_ID)
       )
     ),
-    mainPanel(
+    shiny::mainPanel(
       width = 6,
       shiny::h2("Graph of response variable by selected x-axis variable"),
       highcharter::highchartOutput(MAIN_GRAPH_ID)

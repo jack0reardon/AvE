@@ -44,7 +44,8 @@ get_main_graph_HC <- function(UI_ID,
         marker = list(enabled = FALSE),
         highcharter::hcaes(x = x_axis_value, y = predicted_median),
         name = "Median"
-      )
+      ) %>%
+      highcharter::hc_xAxis(title = list(text = x_axis_field))
     
     for (area_range_index in 1:(length(PREDICTION_PERCENTILES) / 2)) {
       percentile_index_low <- area_range_index
