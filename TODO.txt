@@ -1,1 +1,4 @@
 Tooltip formatting
+Documentation
+Move this TODO to Github
+Format the UI
