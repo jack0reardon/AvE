@@ -5,17 +5,7 @@
 \alias{DUMMY_DATA}
 \title{Dummy data used by AvE}
 \format{
-\subsection{\code{who}}{
-
-A list of 1) A data.frame containing actual data, 2) An R object holding the
-model that attempts to predict the actual data, 3) The field name that is
-being predicted by the model
-\describe{
-\item{DATA}{The actual data with f}
-\item{MODEL}{The model that predicts}
-\item{RESPONSE}{The name of the field that is predicted by MODEL}
-}
-}
+An object of class \code{list} of length 4.
 }
 \source{
 /data-raw/Prepare DUMMY_DATA.R
@@ -24,6 +14,18 @@ being predicted by the model
 DUMMY_DATA
 }
 \description{
-Dummy data used by AvE
+A list of 1) A data.frame containing actual data, 2) An R object holding the
+model that attempts to predict the actual data, 3) The field name that is
+being predicted by the model, 4) A function that applies the GLM to data
+}
+\details{
+\describe{
+\item{DATA}{The actual data}
+\item{MODEL}{The model that predicts}
+\item{RESPONSE}{The name of the field that is predicted by MODEL}
+\item{PREDICT_fUNCTION}{A function which takes as input MODEL and a data.frame
+and returns the result of the model applied to the data, typically by use
+of predict()}
+}
 }
 \keyword{datasets}
