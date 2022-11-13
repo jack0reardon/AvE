@@ -7,4 +7,4 @@ Features:
 2. Select amongst all predictor variables with a drop-down button - graphs the selected variable on the x-axis
 3. Shows predicted median and percentiles in addition to the standard "single-point-estimate" mean value that most machine learning models output. Percentiles are determined by variying the selected predictor (step #2) and holding all other predictor variables constant.
 
-![alt text](https://github.com/jack0reardon/AvE/tree/main/inst/www/screenshot_1.png "The User Interface")
+![alt text](https://github.com/jack0reardon/AvE/tree/main/inst/www/screenshot_1.png?raw=TRUE "The User Interface")
