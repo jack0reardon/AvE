@@ -9,4 +9,5 @@ Features:
 4. Dynamically updates field filters that can be applied - filters may be applied only to fields that are not graphed (the selected x-axis and the response variable). Changes filter type (slider or drop down) depending on whether the field is numeric or discrete
 5. Capable of graphing *any* model - GLM, Decision trees, neural network, home-made...
 
-![alt text](https://github.com/jack0reardon/AvE/tree/main/inst/www/screenshot_1.png?raw=TRUE "The User Interface")
+
+![The User Interface](/inst/www/screenshot_1.png)
