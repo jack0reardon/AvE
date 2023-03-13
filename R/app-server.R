@@ -5,20 +5,11 @@ app_server <- function(input, output, session) {
   on_load <- shiny::reactiveVal("dummy")
   selected_data <- shiny::reactiveVal(NULL)
   main_graph <- shiny::reactiveVal(NULL)
+  x_axis_field_choices <- shiny::reactiveVal(NULL)
   
   
   
-  #### 2 Reactive relationships ####
-  
-  x_axis_field_choices <- shiny::reactive(get_x_axis_field_choices(selected_data()))
-  field_filters <- shiny::reactive(get_field_filters(UI_ID = FIELD_FILTERS_UI_ID,
-                                                     the_data = selected_data(),
-                                                     x_axis_field_choices = x_axis_field_choices(),
-                                                     x_axis_field = input[[X_AXIS_SI_ID]]))
-  
-  
-  
-  #### 3.1 First observe: Load data ####
+  #### 2.1 First observe: Load data ####
   
   shiny::observeEvent(on_load(), {
     waiter::waiter_show(html = waiter::spin_wave())
@@ -26,28 +17,49 @@ app_server <- function(input, output, session) {
   })
   
   shiny::observeEvent(selected_data(), {
-    waiter::waiter_hide()
-  })
-  
-  
-  
-  #### 3.2 Other observes ####
-  
-  shiny::observeEvent(x_axis_field_choices(), {
-    if (!is.null(x_axis_field_choices())) {
-      shiny::updateSelectInput(session, X_AXIS_SI_ID,
-                               choices = x_axis_field_choices())
+    if (!is.null(selected_data())) {
+      model_sets <- names(selected_data()$MODEL_SETS)
+      
+      shiny::updateSelectInput(session, SELECTED_MODEL_SET_SI_ID,
+                               choices = model_sets,
+                               selected = model_sets[1])
+      
+      waiter::waiter_hide()
     }
   })
   
-  shiny::observeEvent(field_filters(), {
-    # Proceed to update filters only if the field_filters() has been updated
-    if (!is.null(field_filters())) {
+  shiny::observeEvent(input[[SELECTED_MODEL_SET_SI_ID]], {
+    selected_model_set <- input[[SELECTED_MODEL_SET_SI_ID]]
+    
+    if (!is.null(selected_model_set)) {
+      selected_model_choices <- names(selected_data()$MODEL_SETS[[selected_model_set]]$MODELS)
+      shiny::updateSelectInput(session, SELECTED_MODEL_SI_ID,
+                               choices = selected_model_choices,
+                               selected = selected_model_choices[1])
+      
+      x_axis_field_choices(get_x_axis_field_choices(selected_data(),
+                                                    selected_model_set))
+      shiny::updateSelectInput(session, X_AXIS_SI_ID,
+                               choices = x_axis_field_choices(),
+                               selected = x_axis_field_choices()[1])
+    }
+  })
+  
+  shiny::observeEvent(input[[X_AXIS_SI_ID]], {
+    selected_x_axis <- input[[X_AXIS_SI_ID]]
+    
+    if (!is.null(selected_x_axis)) {
       output[[FIELD_FILTERS_UI_ID]] <- shiny::renderUI({
-        field_filters()
+        get_field_filters(UI_ID = FIELD_FILTERS_UI_ID,
+                          the_data = selected_data(),
+                          selected_x_axis_field = input[[X_AXIS_SI_ID]])
       })
     }
   })
+  
+  
+  
+  #### 2.2 Other observes ####
   
   shiny::observeEvent(input[[APPLY_AB_ID]], {
     # Proceed to update graph only if the field_filters() has been updated
@@ -55,7 +67,7 @@ app_server <- function(input, output, session) {
   
     main_graph(get_main_graph_HC(UI_ID = MAIN_GRAPH_ID,
                                  the_data = selected_data(),
-                                 x_axis_field = input[[X_AXIS_SI_ID]],
+                                 selected_x_axis_field = input[[X_AXIS_SI_ID]],
                                  input))
   })
   
