@@ -5,7 +5,7 @@
 \alias{DUMMY_DATA}
 \title{Dummy data used by AvE}
 \format{
-An object of class \code{list} of length 4.
+An object of class \code{list} of length 2.
 }
 \source{
 /data-raw/Prepare DUMMY_DATA.R
