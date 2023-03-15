@@ -30,7 +30,7 @@ create_shiny_ID("FIELD_FILTERS_UI_ID")
 DATA_SAMPLE_SIZE <- 500
 FACTOR_ELEMENTS_MAX_COUNT <- 20
 N_PREDICTIONS_ALONG_X_AXIS <- 20
-prediction_percentiles_values <- c(0, 0.05, 0.25, 0.75, 0.95, 1)
+prediction_percentiles_values <- c(0.001, 0.05, 0.1, 0.25, 0.4, 0.6, 0.75, 0.9, 0.95, 0.999)
 PREDICTION_PERCENTILES <- setNames(prediction_percentiles_values, nm = sprintf("%1.f%%", prediction_percentiles_values * 100))
 DO_EXCLUDE_SELECTED_X_AXIS_FIELD_FROM_FILTERS_DEFAULT <- FALSE
 DO_EXCLUDE_RESPONSE_FIELD_FROM_FILTERS_DEFAULT <- FALSE

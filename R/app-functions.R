@@ -175,18 +175,45 @@ get_predicted_data_statistics <- function(the_data,
                                           selected_model_set,
                                           selected_model,
                                           x_axis_field) {
-  x_axis_prediction_values <- get_x_axis_data_values(the_data$DATA[[x_axis_field]])
+  x_axis_values <- the_data$DATA[[x_axis_field]]
+  x_axis_values <- x_axis_values[order(x_axis_values)]
+  
+  x_axis_prediction_values <- get_x_axis_data_values(x_axis_values)
   
   selected_model <- the_data$MODEL_SETS[[selected_model_set]]$MODELS[[selected_model]]
   
-  the_data_to_predict <- the_data$DATA
   predicted_data <- NULL
+  
   for (x_axis_prediction_value in x_axis_prediction_values) {
-    the_data_to_predict[[x_axis_field]] <- x_axis_prediction_value
+    equal_points <- which(x_axis_values == x_axis_prediction_value)
+    
+    if (length(equal_points) > 0) {
+      the_data_to_predict <- the_data$DATA |>
+        dplyr::filter(.data[[x_axis_field]] == x_axis_prediction_value)
+    } else {
+      lower_value_index <- which(x_axis_values < x_axis_prediction_value)
+      upper_value_index <- which(x_axis_values > x_axis_prediction_value)
+      
+      if (length(lower_value_index) == 0) {
+        the_data_to_predict <- the_data$DATA |>
+          dplyr::filter(.data[[x_axis_field]] == min(.data[[x_axis_field]]))
+      } else if (length(upper_value_index) == 0) {
+        the_data_to_predict <- the_data$DATA |>
+          dplyr::filter(.data[[x_axis_field]] == max(.data[[x_axis_field]]))
+      } else {
+        lower_value <- x_axis_values[max(lower_value_index)]
+        upper_value <- x_axis_values[min(upper_value_index)]
+        
+        the_data_to_predict <- the_data$DATA |>
+          dplyr::filter(.data[[x_axis_field]] %in% c(lower_value, upper_value))
+      }
+    }
+    
     predicated_values <- selected_model$PREDICT_FUNCTION(selected_model$MODEL, the_data_to_predict)
+    predicated_quantiles <- selected_model$PREDICT_FUNCTION(selected_model$MODEL, the_data_to_predict, quantiles = as.numeric(PREDICTION_PERCENTILES))
     predicted_mean <- mean(predicated_values)
-    predicted_median <- quantile(predicated_values, 0.5, names = FALSE)
-    predicted_percentiles <- quantile(predicated_values, PREDICTION_PERCENTILES, names = FALSE)
+    predicted_median <- sapply(selected_model$PREDICT_FUNCTION(selected_model$MODEL, the_data_to_predict, quantiles = 0.5), mean)
+    predicted_percentiles <- sapply(predicated_quantiles, mean)
     
     predicted_data_to_insert <- data.frame(x_axis_value = x_axis_prediction_value,
                                            predicted_mean = predicted_mean,
